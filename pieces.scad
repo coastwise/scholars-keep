@@ -40,3 +40,13 @@ module pieces (n) {
 }
 
 for (i = [0:3]) translate([i*tri_width*2,0,0]) pieces(i+1);
+
+translate([0,tri_width*2,0]) {
+    pieces(3);
+    translate([5*tri_height/6,tri_width/2,0]) piece();
+}
+
+translate([0,tri_width*4,0]) {
+    mirror([1,0,0]) pieces(2);
+    translate([tri_height,0,0]) pieces(2);
+}
