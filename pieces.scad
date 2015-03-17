@@ -10,11 +10,13 @@ tri_radius = tri_height * 2 / 3;
 thickness = 5;
 battlement = 5;
 
-module crenellation (n, w) {
-    translate([-tri_radius/2,20,5])
-    cube([30,10,10], center=true);        
-    translate([-tri_radius/2,-20,5])
-    cube([30,10,10], center=true);
+module crenellation (n, w, h) {
+    step = w/(n+1);
+    translate([-w/2,0,0]) {
+        for (i = [1:n])
+            translate([i*step,0,h/2])
+            cube([5,6,h],center=true);
+    }
 } 
 
 module piece () {
@@ -22,7 +24,10 @@ module piece () {
         triangle(10, tri_radius, 0);
         translate([0,0,battlement]) {
             triangle(battlement+1, tri_radius-5, 0);
-            for (i = [0:2]) rotate([0,0,i*120]) crenellation(2, tri_width);
+            for (i = [0:2])
+                rotate([0, 0, 90 + i*120])
+                translate([0, tri_height/3, 1])
+                crenellation(4, tri_width, battlement);
         }
     }
     translate([0,0,-battlement]) triangle(battlement, tri_radius-5, 0);
