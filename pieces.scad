@@ -33,4 +33,10 @@ module piece () {
     translate([0,0,-battlement]) triangle(battlement, tri_radius-5, 0);
 }
 
-piece();
+module pieces (n) {
+    for (i = [0:n-1])
+        translate([0, i*tri_width/2, 0])
+        rotate([0, 0, i*180]) translate([-tri_height/6, 0, 0]) piece();
+}
+
+for (i = [0:3]) translate([i*tri_width*2,0,0]) pieces(i+1);
