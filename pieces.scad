@@ -30,7 +30,7 @@ module piece () {
                 crenellation(4, tri_width, battlement);
         }
     }
-    translate([0,0,-battlement]) triangle(battlement, tri_radius-5, 0);
+    translate([0,0,-battlement]) triangle(battlement, tri_radius-5, -1);
 }
 
 module pieces (n) {
