@@ -26,7 +26,7 @@ module piece (c=[0:2]) {
             triangle(battlement+1, tri_radius-5, 0);
             for (i = c)
                 rotate([0, 0, 90 + i*120])
-                translate([0, tri_height/3, 1])
+                translate([0, tri_height/3, 2])
                 crenellation(4, tri_width, battlement);
         }
     }
