@@ -50,3 +50,13 @@ translate([0,tri_width*4,0]) {
     mirror([1,0,0]) pieces(2);
     translate([tri_height,0,0]) pieces(2);
 }
+
+module foundation () {
+    piece();
+    for (i = [0:2]) rotate([0,0,60+i*120]) {
+        translate([5*tri_height/6,0,0]) pieces(4);
+        translate([5*tri_height/3,tri_width/2,0]) piece();
+    }
+}
+
+translate([0,-tri_width*3,0]) foundation();
