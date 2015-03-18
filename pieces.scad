@@ -19,12 +19,12 @@ module crenellation (n, w, h) {
     }
 } 
 
-module piece () {
+module piece (c=[0:2]) {
     difference() {
         triangle(10, tri_radius, 0);
         translate([0,0,battlement]) {
             triangle(battlement+1, tri_radius-5, 0);
-            for (i = [0:2])
+            for (i = c)
                 rotate([0, 0, 90 + i*120])
                 translate([0, tri_height/3, 1])
                 crenellation(4, tri_width, battlement);
