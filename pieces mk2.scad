@@ -16,12 +16,12 @@ module side () {
     translate([-tri_width,-tri_height+tri_radius,0]) cube(s);
 }
 
-module open_side () {
+module exterior_edge () {
     translate([-tri_width/2,-tri_height+tri_radius,0])
     cube([tri_width, thickness, thickness*2]);
 }
 
-module closed_side () {
+module interior_edge () {
     translate([-tri_width/2,-tri_height+tri_radius,0])
     cube([tri_width, thickness, thickness]);
 }
@@ -32,9 +32,9 @@ module piece (data) {
     for(i=[0:2]) {
         rotate([0,0,i*120*clockwise])
         if (abs(data) / pow(2,i) % 2 >= 1) {
-            open_side();
+            exterior_edge();
         } else {
-            closed_side();
+            interior_edge();
         }
     }
 }
