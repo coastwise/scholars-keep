@@ -28,8 +28,9 @@ module closed_side () {
 
 
 module piece (data) {
+    clockwise = data >= 0 ? 1 : -1;
     for(i=[0:2]) {
-        rotate([0,0,sign(data)*i*120])
+        rotate([0,0,i*120*clockwise])
         if (abs(data) / pow(2,i) % 2 >= 1) {
             open_side();
         } else {
@@ -40,7 +41,7 @@ module piece (data) {
 
 module pieces (pattern=[], index=0) {
     if (index < len(pattern)){
-        clockwise = sign(pattern[index]);
+        clockwise = pattern[index] >= 0 ? 1 : -1;
         piece(pattern[index]);
         rotate([0,0,-60*clockwise]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
      }
@@ -48,8 +49,10 @@ module pieces (pattern=[], index=0) {
 
 pacman = [5,4,4,6];
 stick = [5,4,-4,6];
+triforce = [5,0,6];
 
 offset = [0,2*tri_width,0];
 
+translate(-offset) pieces(triforce);
 pieces(pacman);
 translate(offset) pieces(stick);
