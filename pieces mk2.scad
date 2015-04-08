@@ -5,11 +5,13 @@ module triangle (h, r, b=0) {
 
 thickness = 2;
 
-//rotate([0,0,-30]) triangle(thickness, tri_radius, 0);
+//
 
 tri_height = 25.4; // 1 inch
 tri_width  = tri_height * 2 / sqrt(3);
 tri_radius = tri_height * 2 / 3;
+
+gap = 1; // between pieces
 
 module side () {
     s = [tri_width*2, tri_height, thickness];
@@ -17,7 +19,7 @@ module side () {
 }
 
 module exterior_edge () {
-    translate([-tri_width/2,-tri_height+tri_radius,0])
+    translate([-tri_width/2,-tri_height+tri_radius+gap/2,0])
     cube([tri_width, thickness, thickness*2]);
 }
 
@@ -28,6 +30,7 @@ module interior_edge () {
 
 
 module piece (data) {
+    rotate([0,0,-30]) triangle(thickness-1, tri_radius-gap, 0);
     clockwise = data >= 0 ? 1 : -1;
     for(i=[0:2]) {
         rotate([0,0,i*120*clockwise])
