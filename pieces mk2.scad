@@ -18,21 +18,18 @@ module side () {
 
 module piece (data) {
     intersection_for(i=[0:2]) {
-        rotate([0,0,i*120]) side();
+        if (data / pow(2,i) % 2 >= 1) {
+            rotate([0,0,i*120]) side();
+        }
     }
 }
 
 module pieces (pattern=[], index=0) {
     if (index < len(pattern)){
         piece(pattern[index]);
-        rotate([0,0,-60*pattern[index]]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
+        rotate([0,0,-60]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
      }
 }
 
-//pieces([1,1,1]);
-
-triforce = [1, [1,-1]];
-pacman = [1,1,-1,-1];
+pacman = [5,5,5,7];
 pieces(pacman);
-
-
