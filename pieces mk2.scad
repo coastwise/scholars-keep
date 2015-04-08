@@ -16,20 +16,40 @@ module side () {
     translate([-tri_width,-tri_height+tri_radius,0]) cube(s);
 }
 
+module open_side () {
+    translate([-tri_width/2,-tri_height+tri_radius,0])
+    cube([tri_width, thickness, thickness*2]);
+}
+
+module closed_side () {
+    translate([-tri_width/2,-tri_height+tri_radius,0])
+    cube([tri_width, thickness, thickness]);
+}
+
+
 module piece (data) {
-    intersection_for(i=[0:2]) {
-        if (data / pow(2,i) % 2 >= 1) {
-            rotate([0,0,i*120]) side();
+    for(i=[0:2]) {
+        rotate([0,0,sign(data)*i*120])
+        if (abs(data) / pow(2,i) % 2 >= 1) {
+            open_side();
+        } else {
+            closed_side();
         }
     }
 }
 
 module pieces (pattern=[], index=0) {
     if (index < len(pattern)){
+        clockwise = sign(pattern[index]);
         piece(pattern[index]);
-        rotate([0,0,-60]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
+        rotate([0,0,-60*clockwise]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
      }
 }
 
-pacman = [5,5,5,7];
+pacman = [5,4,4,6];
+stick = [5,4,-4,6];
+
+offset = [0,2*tri_width,0];
+
 pieces(pacman);
+translate(offset) pieces(stick);
