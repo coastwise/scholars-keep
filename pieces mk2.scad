@@ -52,15 +52,20 @@ module piece (data) {
 
 module pieces (pattern=[], index=0) {
     if (index < len(pattern)){
-        clockwise = pattern[index] >= 0 ? 1 : -1;
-        piece(pattern[index]);
-        rotate([0,0,-60*clockwise]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
+        if (len(pattern[index]) == undef) {
+            clockwise = pattern[index] >= 0 ? 1 : -1;
+            piece(pattern[index]);
+            rotate([0,0,-60*clockwise]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
+        } else {
+            pieces(pattern[index],0);
+            rotate([0,0,60]) translate([0, tri_radius, 0]) pieces(pattern, index+1);
+        }
      }
 }
 
 pacman = [5,4,4,6];
 stick = [5,4,-4,6];
-triforce = [5,0,6];
+triforce = [5,[0,6],6];
 
 foundation = [5,-4,0,4,0,-4,4,6];
 
