@@ -52,9 +52,9 @@ module piece (data) {
         intersection_for(i=[0:2]) {
             rotate([0,0,i*120*clockwise])
             if (abs(data) / pow(2,i) % 2 >= 1) {
-                exterior_wall(tri_height);
+                exterior_wall(tri_height-gap);
             } else {
-                interior_wall(tri_height);
+                interior_wall(tri_height-gap/2);
             }
         }
     }
