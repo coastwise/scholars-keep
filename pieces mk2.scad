@@ -13,9 +13,19 @@ tri_radius = tri_height * 2 / 3;
 
 gap = 1; // between pieces
 
+module crenellation (n, w, h) {
+    step = w/(n+1);
+    for (i = [1:n])
+        translate([i*step, thickness/2, h/2])
+        cube([3, thickness+1, h], center=true);
+}
+
 module exterior_wall (thickness) {
     translate([-tri_width/2,-tri_height+tri_radius+gap/2,0])
-    cube([tri_width, thickness, thickness*2]);
+    difference (){
+        cube([tri_width, thickness, thickness*2]);
+        translate([0,0,thickness]) crenellation(4,tri_width,thickness+1);
+    }
 }
 
 module interior_wall (thickness) {
