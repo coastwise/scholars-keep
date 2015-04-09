@@ -13,37 +13,39 @@ tri_radius = tri_height * 2 / 3;
 
 gap = 1; // between pieces
 
-module side () {
-    s = [tri_width*2, tri_height, thickness];
-    translate([-tri_width,-tri_height+tri_radius,0]) cube(s);
-}
-
-module exterior_edge () {
-    intersection () {
+module exterior_wall (thickness) {
     translate([-tri_width/2,-tri_height+tri_radius+gap/2,0])
     cube([tri_width, thickness, thickness*2]);
-        rotate([0,0,-30]) triangle(10, tri_radius-gap,0);
-    }
 }
 
-module interior_edge () {
-    intersection () {
+module interior_wall (thickness) {
     translate([-tri_width/2,-tri_height+tri_radius,0])
     cube([tri_width, thickness, thickness]);
-        translate([0,-gap/2,0]) rotate([0,0,-30]) triangle(10, tri_radius-gap/2,0);
-    }
 }
-
 
 module piece (data) {
     rotate([0,0,-30]) triangle(thickness-1, tri_radius-gap, 0);
     clockwise = data >= 0 ? 1 : -1;
-    for(i=[0:2]) {
-        rotate([0,0,i*120*clockwise])
-        if (abs(data) / pow(2,i) % 2 >= 1) {
-            exterior_edge();
-        } else {
-            interior_edge();
+    intersection () {
+        // actual walls, unioned
+        for(i=[0:2]) {
+            rotate([0,0,i*120*clockwise])
+            if (abs(data) / pow(2,i) % 2 >= 1) {
+                exterior_wall(thickness);
+            } else {
+                interior_wall(thickness);
+            }
+        }
+        
+        // a bounding triangle for the whole piece
+        // created by the intersection of "infinitely" thick walls
+        intersection_for(i=[0:2]) {
+            rotate([0,0,i*120*clockwise])
+            if (abs(data) / pow(2,i) % 2 >= 1) {
+                exterior_wall(tri_height);
+            } else {
+                interior_wall(tri_height);
+            }
         }
     }
 }
