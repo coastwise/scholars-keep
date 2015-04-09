@@ -30,7 +30,7 @@ module interior_edge () {
     intersection () {
     translate([-tri_width/2,-tri_height+tri_radius,0])
     cube([tri_width, thickness, thickness]);
-        rotate([0,0,-30]) triangle(10, tri_radius,0);
+        translate([0,-gap/2,0]) rotate([0,0,-30]) triangle(10, tri_radius-gap/2,0);
     }
 }
 
