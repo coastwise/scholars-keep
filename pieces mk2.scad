@@ -62,8 +62,10 @@ pacman = [5,4,4,6];
 stick = [5,4,-4,6];
 triforce = [5,0,6];
 
+foundation = [5,-4,0,4,0,-4,4,6];
+
 offset = [0,2*tri_width,0];
 
 translate(-offset) pieces(triforce);
-pieces(pacman);
-translate(offset) pieces(stick);
+pieces(foundation);
+
